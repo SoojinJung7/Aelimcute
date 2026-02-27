@@ -1795,14 +1795,20 @@ mascotImg.onload = function() {
     cx.beginPath();
     cx.arc(size/2, size/2, size/2, 0, Math.PI * 2);
     cx.fill();
-    // Draw mascot cropped to top portion (face)
-    const srcH = mascotImg.height * 0.65; // top 65% = face area
+    // Crop chihuahua face from mascot (center-top area)
+    const srcW = mascotImg.width;
+    const srcH = mascotImg.height;
+    // Face is roughly in the center-top 70% of image, horizontally centered
+    const cropX = srcW * 0.15;
+    const cropY = srcH * 0.02;
+    const cropW = srcW * 0.7;
+    const cropH = srcH * 0.6;
     cx.save();
     cx.beginPath();
-    cx.arc(size/2, size/2, size/2 * 0.9, 0, Math.PI * 2);
+    cx.arc(size/2, size/2, size/2 * 0.92, 0, Math.PI * 2);
     cx.clip();
-    cx.drawImage(mascotImg, 0, 0, mascotImg.width, srcH,
-      size * 0.05, size * 0.05, size * 0.9, size * 0.9);
+    cx.drawImage(mascotImg, cropX, cropY, cropW, cropH,
+      size * 0.04, size * 0.04, size * 0.92, size * 0.92);
     cx.restore();
     $(id).href = c.toDataURL('image/png');
   });
