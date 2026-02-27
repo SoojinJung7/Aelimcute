@@ -7,7 +7,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Pawmodoro">
 <link rel="icon" id="dynamicFavicon" type="image/png">
-<link rel="apple-touch-icon" id="appleTouchIcon">
+<link rel="apple-touch-icon" sizes="180x180" id="appleTouchIcon">
+<link rel="manifest" href="manifest.json">
 <title>Pawmodoro - Productivity Timer</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
@@ -1788,32 +1789,54 @@ if (savedDate !== today) {
 // ──────────────────────────────────────────
 const mascotImg = new Image();
 mascotImg.onload = function() {
+  const srcW = mascotImg.width;
+  const srcH = mascotImg.height;
+  // Crop just the chihuahua face+body, filling the entire icon
+  const cropX = srcW * 0.12;
+  const cropY = srcH * 0.0;
+  const cropW = srcW * 0.76;
+  const cropH = srcW * 0.76; // square crop
+
   [['dynamicFavicon', 64], ['appleTouchIcon', 180]].forEach(([id, size]) => {
     const c = document.createElement('canvas');
     c.width = size; c.height = size;
     const cx = c.getContext('2d');
-    // Pink circle background
-    cx.fillStyle = '#F4B8C1';
-    cx.beginPath();
-    cx.arc(size/2, size/2, size/2, 0, Math.PI * 2);
-    cx.fill();
-    // Crop chihuahua face from mascot (center-top area)
-    const srcW = mascotImg.width;
-    const srcH = mascotImg.height;
-    // Face is roughly in the center-top 70% of image, horizontally centered
-    const cropX = srcW * 0.15;
-    const cropY = srcH * 0.02;
-    const cropW = srcW * 0.7;
-    const cropH = srcH * 0.6;
-    cx.save();
-    cx.beginPath();
-    cx.arc(size/2, size/2, size/2 * 0.92, 0, Math.PI * 2);
-    cx.clip();
-    cx.drawImage(mascotImg, cropX, cropY, cropW, cropH,
-      size * 0.04, size * 0.04, size * 0.92, size * 0.92);
-    cx.restore();
+    // Fill background with cream so no transparency
+    cx.fillStyle = '#FAF3EE';
+    cx.fillRect(0, 0, size, size);
+    // Draw mascot filling the whole square
+    cx.drawImage(mascotImg, cropX, cropY, cropW, cropH, 0, 0, size, size);
     $(id).href = c.toDataURL('image/png');
   });
+
+  // Also generate PWA icons and create manifest
+  const icons = [];
+  [192, 512].forEach(size => {
+    const c = document.createElement('canvas');
+    c.width = size; c.height = size;
+    const cx = c.getContext('2d');
+    cx.fillStyle = '#FAF3EE';
+    cx.fillRect(0, 0, size, size);
+    cx.drawImage(mascotImg, cropX, cropY, cropW, cropH, 0, 0, size, size);
+    icons.push({ src: c.toDataURL('image/png'), sizes: size+'x'+size, type: 'image/png' });
+  });
+
+  const manifest = {
+    name: 'Pawmodoro',
+    short_name: 'Pawmodoro',
+    description: 'Productivity Timer with a cute chihuahua',
+    start_url: '.',
+    display: 'standalone',
+    background_color: '#FAF3EE',
+    theme_color: '#D46F86',
+    icons: icons
+  };
+  const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+  const manifestURL = URL.createObjectURL(blob);
+  const link = document.createElement('link');
+  link.rel = 'manifest';
+  link.href = manifestURL;
+  document.head.appendChild(link);
 };
 mascotImg.src = 'mascot.png';
 </script>
