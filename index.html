@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#D46F86">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Pixel Study">
+<link rel="icon" id="dynamicFavicon" type="image/png">
+<link rel="apple-touch-icon" id="appleTouchIcon">
 <title>Pixel Study Timer</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
@@ -1320,74 +1325,79 @@ function drawPixelCat(mood) {
   ctx2.clearRect(0, 0, 64, 64);
   const px = 4; // each pixel = 4x4
 
-  // Color palette
-  const P = '#D46F86'; // medium pink (body)
-  const D = '#6E1A34'; // dark wine (outline/eyes)
-  const W = '#FFFFFF'; // white
-  const L = '#F4B8C1'; // light pink
-  const C = '#FAF3EE'; // cream
-  const T = null;      // transparent
+  // Black & Tan Chihuahua palette
+  const B = '#2A2A2A'; // black fur
+  const K = '#1A1A1A'; // darker black (outline)
+  const N = '#D4956A'; // tan fur
+  const L = '#E8B88A'; // light tan (muzzle/chest)
+  const W = '#FFFFFF'; // white (eyes)
+  const E = '#111111'; // eye pupil
+  const P = '#D46F86'; // pink (tongue/blush)
+  const R = '#3D3D3D'; // dark gray (ear inner)
+  const S = '#C47A58'; // tan shadow
+  const T = null;       // transparent
 
-  // 16x16 pixel cat grid - changes based on mood
   let grid;
 
   if (mood === 'sleeping') {
+    // Curled up sleeping chihuahua
     grid = [
       [T,T,T,T,T,T,T,T,T,T,T,T,T,T,T,T],
       [T,T,T,T,T,T,T,T,T,T,T,T,T,T,T,T],
       [T,T,T,T,T,T,T,T,T,T,T,T,T,T,T,T],
-      [T,T,T,T,T,T,T,T,T,T,T,T,T,T,T,T],
-      [T,T,D,D,T,T,T,T,T,T,T,T,D,D,T,T],
-      [T,D,L,L,D,T,T,T,T,T,T,D,L,L,D,T],
-      [T,D,L,L,L,D,D,D,D,D,D,L,L,L,D,T],
-      [D,L,L,L,L,L,L,L,L,L,L,L,L,L,L,D],
-      [D,L,L,D,D,L,L,L,L,L,L,D,D,L,L,D],
-      [D,L,L,D,D,L,L,L,L,L,L,D,D,L,L,D],
-      [D,L,L,L,L,L,L,D,L,L,L,L,L,L,L,D],
-      [D,L,L,L,L,L,D,L,D,L,L,L,L,L,L,D],
-      [T,D,L,L,L,L,L,L,L,L,L,L,L,L,D,T],
-      [T,T,D,D,D,D,D,D,D,D,D,D,D,D,T,T],
+      [T,T,K,K,T,T,T,T,T,T,T,T,K,K,T,T],
+      [T,K,B,R,K,T,T,T,T,T,T,K,R,B,K,T],
+      [T,T,K,B,B,K,K,K,K,K,K,B,B,K,T,T],
+      [T,K,B,B,B,B,B,B,B,B,B,B,B,B,K,T],
+      [K,B,B,N,N,B,B,B,B,B,B,N,N,B,B,K],
+      [K,B,N,K,K,N,N,N,N,N,N,K,K,N,B,K],
+      [K,B,N,N,N,N,L,L,L,L,N,N,N,N,B,K],
+      [K,B,B,N,N,L,L,K,L,L,L,N,N,B,B,K],
+      [K,B,B,B,N,N,L,L,L,N,N,B,B,B,B,K],
+      [T,K,B,B,B,B,B,B,B,B,B,B,B,B,K,T],
+      [T,T,K,K,K,K,K,K,K,K,K,K,K,K,T,T],
       [T,T,T,T,T,T,T,T,T,T,T,T,T,T,T,T],
       [T,T,T,T,T,T,T,T,T,T,T,T,T,T,T,T],
     ];
   } else if (mood === 'happy') {
+    // Happy chihuahua with tongue out
     grid = [
-      [T,T,D,D,T,T,T,T,T,T,T,T,D,D,T,T],
-      [T,D,P,P,D,T,T,T,T,T,T,D,P,P,D,T],
-      [T,D,P,P,P,D,D,D,D,D,D,P,P,P,D,T],
-      [D,P,P,P,P,P,P,P,P,P,P,P,P,P,P,D],
-      [D,P,P,P,P,P,P,P,P,P,P,P,P,P,P,D],
-      [D,P,W,W,P,P,P,P,P,P,P,W,W,P,P,D],
-      [D,P,D,D,P,P,P,P,P,P,P,D,D,P,P,D],
-      [D,P,P,P,P,P,P,P,P,P,P,P,P,P,P,D],
-      [D,L,P,P,P,P,P,D,P,P,P,P,P,P,L,D],
-      [D,L,L,P,P,D,D,P,D,D,P,P,P,L,L,D],
-      [D,P,P,P,P,P,D,D,D,P,P,P,P,P,P,D],
-      [T,D,P,P,P,P,P,P,P,P,P,P,P,P,D,T],
-      [T,T,D,P,P,P,P,P,P,P,P,P,P,D,T,T],
-      [T,T,T,D,D,D,D,D,D,D,D,D,D,T,T,T],
-      [T,T,T,T,D,P,D,T,T,D,P,D,T,T,T,T],
-      [T,T,T,T,D,D,D,T,T,D,D,D,T,T,T,T],
+      [T,K,K,T,T,T,T,T,T,T,T,T,T,K,K,T],
+      [K,B,B,K,T,T,T,T,T,T,T,T,K,B,B,K],
+      [K,B,R,B,K,K,K,K,K,K,K,K,B,R,B,K],
+      [T,K,B,B,B,B,B,B,B,B,B,B,B,B,K,T],
+      [T,K,B,N,N,B,B,B,B,B,B,N,N,B,K,T],
+      [T,K,N,W,W,N,B,B,B,B,N,W,W,N,K,T],
+      [T,K,N,E,W,N,N,N,N,N,N,E,W,N,K,T],
+      [T,K,N,N,N,N,L,L,L,L,N,N,N,N,K,T],
+      [T,K,P,N,N,L,L,K,L,L,L,N,N,P,K,T],
+      [T,K,P,N,N,L,K,L,K,L,L,N,N,P,K,T],
+      [T,T,K,N,N,L,L,P,L,L,L,N,N,K,T,T],
+      [T,T,K,B,N,N,P,P,P,N,N,B,B,K,T,T],
+      [T,T,T,K,B,B,N,N,N,B,B,B,K,T,T,T],
+      [T,T,T,T,K,K,K,K,K,K,K,K,T,T,T,T],
+      [T,T,T,T,K,B,K,T,T,K,B,K,T,T,T,T],
+      [T,T,T,T,K,K,K,T,T,K,K,K,T,T,T,T],
     ];
   } else {
-    // default / studying
+    // Default / studying chihuahua - alert big eyes
     grid = [
-      [T,T,D,D,T,T,T,T,T,T,T,T,D,D,T,T],
-      [T,D,P,P,D,T,T,T,T,T,T,D,P,P,D,T],
-      [T,D,P,P,P,D,D,D,D,D,D,P,P,P,D,T],
-      [D,P,P,P,P,P,P,P,P,P,P,P,P,P,P,D],
-      [D,P,P,P,P,P,P,P,P,P,P,P,P,P,P,D],
-      [D,P,W,W,P,P,P,P,P,P,P,W,W,P,P,D],
-      [D,P,W,D,P,P,P,P,P,P,P,W,D,P,P,D],
-      [D,P,P,P,P,P,P,P,P,P,P,P,P,P,P,D],
-      [D,P,P,P,P,P,P,D,P,P,P,P,P,P,P,D],
-      [D,P,P,P,P,P,D,P,D,P,P,P,P,P,P,D],
-      [D,P,P,P,P,P,P,P,P,P,P,P,P,P,P,D],
-      [T,D,P,P,P,P,P,P,P,P,P,P,P,P,D,T],
-      [T,T,D,P,P,P,P,P,P,P,P,P,P,D,T,T],
-      [T,T,T,D,D,D,D,D,D,D,D,D,D,T,T,T],
-      [T,T,T,T,D,P,D,T,T,D,P,D,T,T,T,T],
-      [T,T,T,T,D,D,D,T,T,D,D,D,T,T,T,T],
+      [T,K,K,T,T,T,T,T,T,T,T,T,T,K,K,T],
+      [K,B,B,K,T,T,T,T,T,T,T,T,K,B,B,K],
+      [K,B,R,B,K,K,K,K,K,K,K,K,B,R,B,K],
+      [T,K,B,B,B,B,B,B,B,B,B,B,B,B,K,T],
+      [T,K,B,N,N,B,B,B,B,B,B,N,N,B,K,T],
+      [T,K,N,W,W,N,B,B,B,B,N,W,W,N,K,T],
+      [T,K,N,W,E,N,N,N,N,N,N,W,E,N,K,T],
+      [T,K,N,N,N,N,L,L,L,L,N,N,N,N,K,T],
+      [T,K,N,N,N,L,L,K,L,L,L,N,N,N,K,T],
+      [T,K,N,N,N,L,K,L,K,L,L,N,N,N,K,T],
+      [T,T,K,N,N,L,L,L,L,L,L,N,N,K,T,T],
+      [T,T,K,B,N,N,N,L,N,N,N,B,B,K,T,T],
+      [T,T,T,K,B,B,B,B,B,B,B,B,K,T,T,T],
+      [T,T,T,T,K,K,K,K,K,K,K,K,T,T,T,T],
+      [T,T,T,T,K,B,K,T,T,K,B,K,T,T,T,T],
+      [T,T,T,T,K,K,K,T,T,K,K,K,T,T,T,T],
     ];
   }
 
@@ -1406,38 +1416,38 @@ function drawPixelCat(mood) {
 // ──────────────────────────────────────────
 const speeches = {
   idle: [
-    "Let's study! You got this!",
+    "Let's study! Woof!",
     "Ready when you are~",
-    "Press START to begin!",
+    "Press START! *wag wag*",
     "Today will be great!",
     "I believe in you!",
   ],
   studying: [
     "You're doing great!",
-    "Stay focused~!",
-    "Keep it up!",
+    "Stay focused~! Woof!",
+    "Keep it up! *sits quietly*",
     "Almost there..!",
     "So proud of you!",
-    "Focus focus~",
+    "Focus focus~ *watches*",
     "You can do it!",
   ],
   breaking: [
     "Rest well~ zzZ",
     "Take a deep breath~",
-    "Good job! Relax now~",
+    "Good job! *curls up*",
     "Snack time maybe?",
     "Stretch a little~",
   ],
   paused: [
-    "Taking a break?",
-    "Come back soon~",
-    "I'll wait here!",
+    "Taking a break? *tilts head*",
+    "Come back soon~ Whimper..",
+    "I'll wait here! *wag*",
   ],
   done: [
-    "Amazing!! You did it!",
-    "Session complete!!",
-    "So proud of you!",
-    "Level UP!",
+    "Amazing!! *jumps around*",
+    "Session complete!! Woof!",
+    "So proud of you! *licks*",
+    "Level UP! *spins*",
   ],
 };
 
@@ -1910,6 +1920,58 @@ if (savedDate !== today) {
   }
   localStorage.setItem('pixelStudyDate', today);
 }
+
+// ──────────────────────────────────────────
+// Generate Favicon & Logo dynamically
+// ──────────────────────────────────────────
+function generateLogo(size) {
+  const c = document.createElement('canvas');
+  c.width = size; c.height = size;
+  const cx = c.getContext('2d');
+  const px = size / 16;
+
+  // Pink circle background
+  cx.fillStyle = '#F4B8C1';
+  cx.beginPath();
+  cx.arc(size/2, size/2, size/2, 0, Math.PI * 2);
+  cx.fill();
+
+  // Cream inner circle
+  cx.fillStyle = '#FAF3EE';
+  cx.beginPath();
+  cx.arc(size/2, size/2, size/2 * 0.85, 0, Math.PI * 2);
+  cx.fill();
+
+  const B='#2A2A2A',K='#1A1A1A',N='#D4956A',L='#E8B88A',W='#FFFFFF',
+        E='#111111',P='#D46F86',R='#3D3D3D',T=null;
+  const g = [
+    [T,T,K,K,T,T,T,T,T,T,T,T,K,K,T,T],
+    [T,K,B,B,K,T,T,T,T,T,T,K,B,B,K,T],
+    [K,B,B,R,B,K,K,K,K,K,K,B,R,B,B,K],
+    [T,K,B,B,B,B,B,B,B,B,B,B,B,B,K,T],
+    [T,K,B,B,N,N,B,B,B,N,N,B,B,B,K,T],
+    [T,K,B,N,W,W,N,B,N,W,W,N,B,B,K,T],
+    [T,K,B,N,W,E,N,N,N,W,E,N,B,B,K,T],
+    [T,K,B,N,N,N,N,N,N,N,N,N,B,B,K,T],
+    [T,K,N,N,N,L,L,K,L,L,N,N,N,N,K,T],
+    [T,K,N,N,N,L,K,L,K,L,N,N,N,N,K,T],
+    [T,T,K,N,N,L,L,L,L,L,N,N,N,K,T,T],
+    [T,T,K,N,N,N,L,L,L,N,N,N,N,K,T,T],
+    [T,T,K,P,N,N,N,N,N,N,N,P,N,K,T,T],
+    [T,T,T,K,B,N,N,N,N,N,B,K,T,T,T,T],
+    [T,T,T,T,K,K,K,K,K,K,K,T,T,T,T,T],
+    [T,T,T,T,T,T,T,T,T,T,T,T,T,T,T,T],
+  ];
+  for (let y=0;y<16;y++) for (let x=0;x<16;x++) {
+    if (g[y][x]) { cx.fillStyle=g[y][x]; cx.fillRect(x*px,y*px,px,px); }
+  }
+  return c.toDataURL('image/png');
+}
+
+// Set favicon
+$('dynamicFavicon').href = generateLogo(64);
+// Set apple touch icon
+$('appleTouchIcon').href = generateLogo(180);
 </script>
 </body>
 </html>

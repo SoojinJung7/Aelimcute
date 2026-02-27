@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head><title>Generate Logo</title></head>
+<body>
+<canvas id="logo" width="512" height="512"></canvas>
+<canvas id="logo192" width="192" height="192"></canvas>
+<canvas id="favicon" width="64" height="64"></canvas>
+<p>Right-click each image below and "Save Image As" to download:</p>
+<div id="images"></div>
+<script>
+function drawChihuahuaLogo(canvas, size) {
+  const ctx = canvas.getContext('2d');
+  const px = size / 16;
+
+  // Background - rounded pink circle
+  ctx.fillStyle = '#F4B8C1';
+  ctx.beginPath();
+  ctx.arc(size/2, size/2, size/2, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Inner circle
+  ctx.fillStyle = '#FAF3EE';
+  ctx.beginPath();
+  ctx.arc(size/2, size/2, size/2 * 0.85, 0, Math.PI * 2);
+  ctx.fill();
+
+  const B = '#2A2A2A';
+  const K = '#1A1A1A';
+  const N = '#D4956A';
+  const L = '#E8B88A';
+  const W = '#FFFFFF';
+  const E = '#111111';
+  const P = '#D46F86';
+  const R = '#3D3D3D';
+  const T = null;
+
+  // Chihuahua face - 16x16 grid (face only, bigger)
+  const grid = [
+    [T,T,K,K,T,T,T,T,T,T,T,T,K,K,T,T],
+    [T,K,B,B,K,T,T,T,T,T,T,K,B,B,K,T],
+    [K,B,B,R,B,K,K,K,K,K,K,B,R,B,B,K],
+    [T,K,B,B,B,B,B,B,B,B,B,B,B,B,K,T],
+    [T,K,B,B,N,N,B,B,B,N,N,B,B,B,K,T],
+    [T,K,B,N,W,W,N,B,N,W,W,N,B,B,K,T],
+    [T,K,B,N,W,E,N,N,N,W,E,N,B,B,K,T],
+    [T,K,B,N,N,N,N,N,N,N,N,N,B,B,K,T],
+    [T,K,N,N,N,L,L,K,L,L,N,N,N,N,K,T],
+    [T,K,N,N,N,L,K,L,K,L,N,N,N,N,K,T],
+    [T,T,K,N,N,L,L,L,L,L,N,N,N,K,T,T],
+    [T,T,K,N,N,N,L,L,L,N,N,N,N,K,T,T],
+    [T,T,K,P,N,N,N,N,N,N,N,P,N,K,T,T],
+    [T,T,T,K,B,N,N,N,N,N,B,K,T,T,T,T],
+    [T,T,T,T,K,K,K,K,K,K,K,T,T,T,T,T],
+    [T,T,T,T,T,T,T,T,T,T,T,T,T,T,T,T],
+  ];
+
+  for (let y = 0; y < 16; y++) {
+    for (let x = 0; x < 16; x++) {
+      if (grid[y][x]) {
+        ctx.fillStyle = grid[y][x];
+        ctx.fillRect(x * px, y * px, px, px);
+      }
+    }
+  }
+}
+
+// Generate all sizes
+drawChihuahuaLogo(document.getElementById('logo'), 512);
+drawChihuahuaLogo(document.getElementById('logo192'), 192);
+drawChihuahuaLogo(document.getElementById('favicon'), 64);
+
+// Show as images for download
+const images = document.getElementById('images');
+['logo', 'logo192', 'favicon'].forEach(id => {
+  const c = document.getElementById(id);
+  const img = document.createElement('img');
+  img.src = c.toDataURL('image/png');
+  img.style.margin = '10px';
+  img.style.border = '2px solid #ccc';
+  const label = document.createElement('p');
+  label.textContent = `${id} (${c.width}x${c.height})`;
+  images.appendChild(label);
+  images.appendChild(img);
+});
+</script>
+</body>
+</html>
